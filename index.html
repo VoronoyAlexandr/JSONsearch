@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script
+            type="text/javascript"
+            src="http://code.jquery.com/jquery-git2.js"
+            ></script>
+    <meta charset="UTF-8">
+    <title>Autocomplete</title>
+    <style>
+        .main-menu {
+            width: 180px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .main-menu a {
+            display: block;
+            padding: 8px 14px;
+            margin-bottom: -1px;
+            color: #0088CC;
+            text-decoration: none;
+            border: 1px solid #E5E5E5;
+            width: 112px;
+        }
+
+        .main-menu a:hover {
+            background: #F5F5F5;
+        }
+
+        .main-menu > li {
+
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<input type="text" id="searcher">
+
+
+<ul class="main-menu">
+
+
+</ul>
+
+
+<script>
+
+    var items = [];
+
+    $.getJSON("data.json", function (data) {
+
+        for (x = 0; x < data.array.length; x++) {
+            $.each(data.array[x], function (key, val) {
+                items.push(val);
+            });
+        }
+    });
+
+    $('#searcher').bind('input', function () {
+
+        var z = 1;
+
+        $('.main-menu').empty();
+
+        b = $(this).val().toLocaleLowerCase();
+        if (b !== "") {
+
+
+            for (var i = 0; i < items.length; i++) {
+
+                for (var y = 0; y < items[i].length; y++) {
+
+
+                    if (items[i].indexOf(b) !== -1) {
+                        console.log(items[i]);
+                        console.log(b);
+
+                        while (z <= 10) {
+                            $('.main-menu').append("<li><a href='#'>" + items[i] + "</a></li>");
+                            z++;
+                            break;
+                        }
+                        break;
+                    }
+                    if (b === "") {
+                        $('.main-menu').empty();
+                    }
+                }
+
+            }
+
+        }
+    });
+
+</script>
+</body>
+</html>
